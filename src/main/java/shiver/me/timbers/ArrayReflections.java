@@ -57,6 +57,20 @@ public final class ArrayReflections {
     }
 
     /**
+     * Find the type of the elements contained in the supplied array {@code Class}.
+     *
+     * @param type the type of array that is being checked.
+     * @return the type of element contained in the supplied array {@code Class}.
+     */
+    public static Class findComponentType(Class type) {
+
+        // When the class is no longer an array we have recursed to the last dimension, so return the type.
+        if (!type.isArray()) return type;
+
+        return findComponentType(type.getComponentType());
+    }
+
+    /**
      * Find the type of the elements contained in the supplied array. If the supplied object isn't an array then it's
      * {@link Class} is just returned.
      *
@@ -65,7 +79,7 @@ public final class ArrayReflections {
      */
     public static Class findComponentType(Object array) {
 
-        return null;
+        return findComponentType(array.getClass());
     }
 
     /**
