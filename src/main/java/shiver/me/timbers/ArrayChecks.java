@@ -1,5 +1,9 @@
 package shiver.me.timbers;
 
+import java.lang.reflect.Array;
+
+import static shiver.me.timbers.ArrayReflections.*;
+
 /**
  * A class that contains useful helper methods for manipulating arrays.
  *
@@ -10,6 +14,22 @@ public final class ArrayChecks {
     private ArrayChecks() {
     }
 
+    private static boolean innerIsEmpty(Object object) {
+
+        if (isNotArray(object)) return false;
+
+        final int length = Array.getLength(object);
+
+        if (isNotArray(object.getClass().getComponentType())) return 0 == length;
+
+        for (int i = 0; i < length; i++) {
+
+            if (!innerIsEmpty(Array.get(object, i))) return false;
+        }
+
+        return true;
+    }
+
     /**
      * Check that the supplied array is empty, that is if it is {@code null} or of length {@code 0}.
      *
@@ -18,7 +38,7 @@ public final class ArrayChecks {
      */
     public static <T> boolean isEmpty(T[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -29,7 +49,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(byte[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -40,7 +60,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(char[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -51,7 +71,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(short[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -62,7 +82,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(int[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -73,7 +93,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(long[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -84,7 +104,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(float[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -95,7 +115,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(double[] array) {
 
-        return false;
+        return innerIsEmpty(array);
     }
 
     /**
@@ -107,7 +127,7 @@ public final class ArrayChecks {
      */
     public static <T> boolean isNotEmpty(T[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -118,7 +138,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(byte[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -129,7 +149,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(char[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -140,7 +160,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(short[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -151,7 +171,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(int[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -162,7 +182,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(long[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -173,7 +193,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(float[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**
@@ -184,7 +204,7 @@ public final class ArrayChecks {
      */
     public static boolean isNotEmpty(double[] array) {
 
-        return false;
+        return !isEmpty(array);
     }
 
     /**

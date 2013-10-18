@@ -1,5 +1,6 @@
 package shiver.me.timbers;
 
+import static shiver.me.timbers.ArrayChecks.*;
 import static shiver.me.timbers.ArrayReflections.isArray;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
 import static shiver.me.timbers.Asserts.assertIsTrue;
@@ -69,6 +70,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static <T> void assertIsEmpty(String message, T[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -79,6 +82,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, byte[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -89,6 +94,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, char[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -99,6 +106,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, short[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -109,6 +118,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, int[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -119,6 +130,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, long[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -129,6 +142,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, float[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -139,6 +154,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not empty.
      */
     public static void assertIsEmpty(String message, double[] array) {
+
+        assertIsTrue(message, isEmpty(array));
     }
 
     /**
@@ -149,6 +166,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static <T> void assertIsNotEmpty(String message, T[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -159,6 +178,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, byte[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -169,6 +190,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, char[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -179,6 +202,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, short[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -189,6 +214,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, int[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -199,6 +226,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, long[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -209,6 +238,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, float[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
@@ -219,6 +250,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is empty.
      */
     public static void assertIsNotEmpty(String message, double[] array) {
+
+        assertIsTrue(message, isNotEmpty(array));
     }
 
     /**
