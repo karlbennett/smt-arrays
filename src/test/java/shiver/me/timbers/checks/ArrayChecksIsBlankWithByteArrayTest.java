@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_BYTE_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsBlankWithByteArrayTest extends AbstractCheckAndAssertTest<byte[]> {
+public class ArrayChecksIsBlankWithByteArrayTest extends AbstractIsEmptyCheckAndAssertTest<byte[]> {
 
     public ArrayChecksIsBlankWithByteArrayTest() {
         super(NOT_EMPTY_BYTE_ARRAY, BYTES_1D);

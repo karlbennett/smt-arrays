@@ -262,6 +262,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static <T> void assertIsBlank(String message, T[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -272,6 +274,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, byte[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -282,6 +286,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, char[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -292,6 +298,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, short[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -302,6 +310,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, int[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -312,6 +322,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, long[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -322,6 +334,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, float[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -332,6 +346,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is not blank.
      */
     public static void assertIsBlank(String message, double[] array) {
+
+        assertIsTrue(message, isBlank(array));
     }
 
     /**
@@ -342,6 +358,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static <T> void assertIsNotBlank(String message, T[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -352,6 +370,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, byte[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -362,6 +382,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, char[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -372,6 +394,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, short[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -382,6 +406,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, int[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -392,6 +418,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, long[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -402,6 +430,8 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, float[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 
     /**
@@ -412,5 +442,7 @@ public final class ArrayAsserts {
      * @throws AssertionError if the array is blank.
      */
     public static void assertIsNotBlank(String message, double[] array) {
+
+        assertIsTrue(message, isNotBlank(array));
     }
 }

@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_LONG_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsBlankWithLongArrayTest extends AbstractCheckAndAssertTest<long[]> {
+public class ArrayChecksIsBlankWithLongArrayTest extends AbstractIsEmptyCheckAndAssertTest<long[]> {
 
     public ArrayChecksIsBlankWithLongArrayTest() {
         super(NOT_EMPTY_LONG_ARRAY, LONGS_1D);

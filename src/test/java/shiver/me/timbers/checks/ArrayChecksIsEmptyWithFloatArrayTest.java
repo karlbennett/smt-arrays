@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_FLOAT_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsEmptyWithFloatArrayTest extends AbstractCheckAndAssertTest<float[]> {
+public class ArrayChecksIsEmptyWithFloatArrayTest extends AbstractIsEmptyCheckAndAssertTest<float[]> {
 
     public ArrayChecksIsEmptyWithFloatArrayTest() {
         super(EMPTY_FLOAT_ARRAY, NOT_EMPTY_FLOAT_ARRAY);
