@@ -7,7 +7,8 @@ import static java.lang.reflect.Array.get;
 import static java.lang.reflect.Array.getLength;
 import static java.lang.reflect.Array.newInstance;
 import static java.lang.reflect.Array.set;
-import static shiver.me.timbers.ArrayChecks.*;
+import static shiver.me.timbers.ArrayChecks.innerIsEmpty;
+import static shiver.me.timbers.ArrayReflections.findComponentType;
 import static shiver.me.timbers.ArrayReflections.findDimensions;
 import static shiver.me.timbers.ArrayReflections.isArray;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
@@ -41,7 +42,7 @@ public final class ArrayUtils {
         if (index >= getLength(array)) return copiedArray;
 
         // Otherwise copy the next element in the array.
-        Object element = get(array, index);
+        final Object element = get(array, index);
 
         // If the next element is an array then it needs to be deep copied.
         if (isNotNull(element) && isArray(element)) {
@@ -311,8 +312,73 @@ public final class ArrayUtils {
     }
 
     /**
-     * Autobox a primitive array into an equivalent array of the primitives wrapper objects, this method also works in
-     * the reverse direction. This method works on arrays with any number of dimensions.
+     * The recursive deep autobox method that is initialised in the {@link #innerDeepAutoBox(Class, Object)} method.
+     *
+     * @param type           the base type of the array to convert into e.g. {@code Byte.class}, {@code Char.class},
+     *                       {@code Long.class}...
+     * @param array          the array to autobox.
+     * @param autoBoxedArray the array that will hold the autoboxed values.
+     * @param index          the index of the current element that is being autoboxed.
+     * @param <T>            the generic array type.
+     * @return the new array containing the autoboxed values.
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T innerDeepAutoBox(Class type, Object array, T autoBoxedArray, int index) {
+
+        if (index >= getLength(array)) return autoBoxedArray;
+
+        final Object element = get(array, index);
+
+        if (isArray(element)) {
+
+            int[] dimensions = new int[findDimensions(element)];
+            dimensions[0] = getLength(element);
+
+            set(
+                    autoBoxedArray,
+                    index,
+                    innerDeepAutoBox(type, element, (T) newInstance(type, dimensions), 0)
+            );
+
+        } else {
+
+            set(autoBoxedArray, index, element);
+        }
+
+        return innerDeepAutoBox(type, array, autoBoxedArray, ++index);
+    }
+
+    /**
+     * Autobox a the supplied array into an equivalent array of the boxed or un-boxed elements. This method works on
+     * arrays with any number of dimensions.
+     * <p/>
+     * This method is private because it isn't type safe.
+     *
+     * @param arrayType the type of the array to convert into. This should be the array type, that is for a 3D
+     *                  {@link Byte} array the value should be {@code Byte[][][].class}.
+     * @param array     the array to autobox.
+     * @param <T>       the generic array type.
+     * @return the new array containing the autoboxed values.
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T innerDeepAutoBox(Class<T> arrayType, Object array) {
+
+        if (null == array) return null;
+
+        final int length = getLength(array);
+
+        final Class type = findComponentType(arrayType);
+
+        final T autoBoxedArray = (T) newInstance(arrayType.getComponentType(), length);
+
+        if (0 >= length) return autoBoxedArray;
+
+        return innerDeepAutoBox(type, array, autoBoxedArray, 0);
+    }
+
+    /**
+     * Autobox a the supplied array into an equivalent array of the boxed or un-boxed elements. This method works on
+     * arrays with any number of dimensions.
      *
      * @param arrayType the type of the array to convert into. This should be the array type, that is for a 3D
      *                  {@link Byte} array the value should be {@code Byte[][][].class}.
@@ -321,7 +387,7 @@ public final class ArrayUtils {
      */
     public static <A, T> A deepAutoBox(Class<A> arrayType, T[] array) {
 
-        return null;
+        return innerDeepAutoBox(arrayType, array);
     }
 
     /**
@@ -332,7 +398,7 @@ public final class ArrayUtils {
      */
     public static Byte[] deepAutoBox(byte[] array) {
 
-        return null;
+        return innerDeepAutoBox(Byte[].class, array);
     }
 
     /**
@@ -343,7 +409,7 @@ public final class ArrayUtils {
      */
     public static Character[] deepAutoBox(char[] array) {
 
-        return null;
+        return innerDeepAutoBox(Character[].class, array);
     }
 
     /**
@@ -354,7 +420,7 @@ public final class ArrayUtils {
      */
     public static Short[] deepAutoBox(short[] array) {
 
-        return null;
+        return innerDeepAutoBox(Short[].class, array);
     }
 
     /**
@@ -365,7 +431,7 @@ public final class ArrayUtils {
      */
     public static Integer[] deepAutoBox(int[] array) {
 
-        return null;
+        return innerDeepAutoBox(Integer[].class, array);
     }
 
     /**
@@ -376,7 +442,7 @@ public final class ArrayUtils {
      */
     public static Long[] deepAutoBox(long[] array) {
 
-        return null;
+        return innerDeepAutoBox(Long[].class, array);
     }
 
     /**
@@ -387,7 +453,7 @@ public final class ArrayUtils {
      */
     public static Float[] deepAutoBox(float[] array) {
 
-        return null;
+        return innerDeepAutoBox(Float[].class, array);
     }
 
     /**
@@ -398,7 +464,7 @@ public final class ArrayUtils {
      */
     public static Double[] deepAutoBox(double[] array) {
 
-        return null;
+        return innerDeepAutoBox(Double[].class, array);
     }
 
     /**
@@ -409,7 +475,7 @@ public final class ArrayUtils {
      */
     public static byte[] deepAutoBox(Byte[] array) {
 
-        return null;
+        return innerDeepAutoBox(byte[].class, array);
     }
 
     /**
@@ -420,7 +486,7 @@ public final class ArrayUtils {
      */
     public static char[] deepAutoBox(Character[] array) {
 
-        return null;
+        return innerDeepAutoBox(char[].class, array);
     }
 
     /**
@@ -431,7 +497,7 @@ public final class ArrayUtils {
      */
     public static short[] deepAutoBox(Short[] array) {
 
-        return null;
+        return innerDeepAutoBox(short[].class, array);
     }
 
     /**
@@ -442,7 +508,7 @@ public final class ArrayUtils {
      */
     public static int[] deepAutoBox(Integer[] array) {
 
-        return null;
+        return innerDeepAutoBox(int[].class, array);
     }
 
     /**
@@ -453,7 +519,7 @@ public final class ArrayUtils {
      */
     public static long[] deepAutoBox(Long[] array) {
 
-        return null;
+        return innerDeepAutoBox(long[].class, array);
     }
 
     /**
@@ -464,7 +530,7 @@ public final class ArrayUtils {
      */
     public static float[] deepAutoBox(Float[] array) {
 
-        return null;
+        return innerDeepAutoBox(float[].class, array);
     }
 
     /**
@@ -475,7 +541,7 @@ public final class ArrayUtils {
      */
     public static double[] deepAutoBox(Double[] array) {
 
-        return null;
+        return innerDeepAutoBox(double[].class, array);
     }
 
     /**
