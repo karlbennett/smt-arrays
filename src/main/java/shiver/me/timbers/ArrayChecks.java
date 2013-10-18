@@ -2,7 +2,7 @@ package shiver.me.timbers;
 
 import java.lang.reflect.Array;
 
-import static shiver.me.timbers.ArrayReflections.*;
+import static shiver.me.timbers.ArrayReflections.isNotArray;
 
 /**
  * A class that contains useful helper methods for manipulating arrays.
@@ -14,6 +14,14 @@ public final class ArrayChecks {
     private ArrayChecks() {
     }
 
+    /**
+     * A private inner method that carries out the actual {@code isEmpty} recursive logic on any given object. If the
+     * object is not an array then the method will return {@code false}.
+     *
+     * @param object the array to check.
+     * @return {@code true} if the array has a length of zero, or it's final dimension has length zero, otherwise
+     *         return false.
+     */
     private static boolean innerIsEmpty(Object object) {
 
         if (isNotArray(object)) return false;
@@ -31,7 +39,8 @@ public final class ArrayChecks {
     }
 
     /**
-     * Check that the supplied array is empty, that is if it is {@code null} or of length {@code 0}.
+     * Check that the supplied array is empty, that is if it is {@code null} or it's final dimension has a length of
+     * {@code 0}.
      *
      * @param array the array to check.
      * @return {@code true} if the array is empty, otherwise {@code false}.
