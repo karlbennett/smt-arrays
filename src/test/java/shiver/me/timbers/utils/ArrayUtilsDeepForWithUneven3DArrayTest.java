@@ -11,18 +11,27 @@ import static shiver.me.timbers.Constants.UNEVEN_BYTES_3D;
 public class ArrayUtilsDeepForWithUneven3DArrayTest extends AbstractDeepForTest<byte[][][], Byte> {
 
     private static final int[][] COUNT_MATRIX = {
+            {0, 0, 0},
+            {0, 1, 0},
+            {0, 1, 1},
+            {0, 2, 0},
+            {0, 2, 1},
+            {0, 2, 2},
+            {1, 0, 0},
+            {1, 0, 1},
+            {1, 0, 2},
             {1, 1, 0},
+            {1, 1, 1},
+            {1, 1, 2},
             {1, 2, 0},
             {1, 2, 1},
+            {1, 2, 2},
             {2, 0, 0},
             {2, 0, 1},
             {2, 0, 2},
             {2, 1, 0},
             {2, 1, 1},
-            {2, 1, 2},
             {2, 2, 0},
-            {2, 2, 1},
-            {2, 2, 2},
     };
 
     public ArrayUtilsDeepForWithUneven3DArrayTest() {
@@ -51,5 +60,11 @@ public class ArrayUtilsDeepForWithUneven3DArrayTest extends AbstractDeepForTest<
     protected Byte getElementFromAxis(byte[][][] array, int[] axis) {
 
         return array[axis[0]][axis[1]][axis[2]];
+    }
+
+    @Override
+    protected byte[][][] emptyArray() {
+
+        return new byte[3][3][];
     }
 }

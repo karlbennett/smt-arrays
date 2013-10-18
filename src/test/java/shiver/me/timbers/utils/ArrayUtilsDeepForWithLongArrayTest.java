@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForWithLongArrayTest extends AbstractDeepForTest<long
 
         return array[axis[0]];
     }
+
+    @Override
+    protected long[] emptyArray() {
+
+        return new long[0];
+    }
 }

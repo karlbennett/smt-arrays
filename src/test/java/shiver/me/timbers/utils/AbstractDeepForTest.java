@@ -58,6 +58,14 @@ public abstract class AbstractDeepForTest<A, T> {
      */
     protected abstract T getElementFromAxis(A array, int[] axis);
 
+    /**
+     * Implement this method so that it returns an empty array, that is an array with zero length of the correct type
+     * and dimensions.
+     *
+     * @return an empty array.
+     */
+    protected abstract A emptyArray();
+
     @Test
     public void testDeepForRunsEach() {
 
@@ -83,7 +91,7 @@ public abstract class AbstractDeepForTest<A, T> {
             }
         };
 
-        deepFor(array, each);
+        deepFor(emptyArray(), each);
 
         assertEquals("the each run method should not have been called.", 0, each.getCount());
     }

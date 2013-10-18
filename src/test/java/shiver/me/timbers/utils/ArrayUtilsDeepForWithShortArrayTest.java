@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForWithShortArrayTest extends AbstractDeepForTest<sho
 
         return array[axis[0]];
     }
+
+    @Override
+    protected short[] emptyArray() {
+
+        return new short[0];
+    }
 }

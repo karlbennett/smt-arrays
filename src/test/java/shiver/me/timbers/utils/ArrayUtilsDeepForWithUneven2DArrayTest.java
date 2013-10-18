@@ -46,4 +46,10 @@ public class ArrayUtilsDeepForWithUneven2DArrayTest extends AbstractDeepForTest<
 
         return array[axis[0]][axis[1]];
     }
+
+    @Override
+    protected byte[][] emptyArray() {
+
+        return new byte[3][];
+    }
 }

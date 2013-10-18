@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForWithFloatArrayTest extends AbstractDeepForTest<flo
 
         return array[axis[0]];
     }
+
+    @Override
+    protected float[] emptyArray() {
+
+        return new float[0];
+    }
 }

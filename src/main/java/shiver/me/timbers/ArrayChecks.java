@@ -23,7 +23,7 @@ public final class ArrayChecks {
      * @return {@code true} if the array has a length of zero, or it's final dimension has length zero, otherwise
      *         return false.
      */
-    private static boolean innerIsEmpty(Object object) {
+    static boolean innerIsEmpty(Object object) {
 
         if (isNull(object)) {
 

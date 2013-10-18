@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForWithDoubleArrayTest extends AbstractDeepForTest<do
 
         return array[axis[0]];
     }
+
+    @Override
+    protected double[] emptyArray() {
+
+        return new double[0];
+    }
 }

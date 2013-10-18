@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForTest extends AbstractDeepForTest<Object[], Object>
 
         return array[axis[0]];
     }
+
+    @Override
+    protected Object[] emptyArray() {
+
+        return new Object[0];
+    }
 }

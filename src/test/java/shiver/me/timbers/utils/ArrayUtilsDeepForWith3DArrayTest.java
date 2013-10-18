@@ -52,4 +52,10 @@ public class ArrayUtilsDeepForWith3DArrayTest extends AbstractDeepForTest<Object
 
         return array[axis[0]][axis[1]][axis[2]];
     }
+
+    @Override
+    protected Object[][][] emptyArray() {
+
+        return new Object[0][][];
+    }
 }

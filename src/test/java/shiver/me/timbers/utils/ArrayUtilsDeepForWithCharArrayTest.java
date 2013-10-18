@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForWithCharArrayTest extends AbstractDeepForTest<char
 
         return array[axis[0]];
     }
+
+    @Override
+    protected char[] emptyArray() {
+
+        return new char[0];
+    }
 }

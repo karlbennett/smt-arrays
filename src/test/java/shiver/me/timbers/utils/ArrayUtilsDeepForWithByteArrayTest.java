@@ -37,4 +37,10 @@ public class ArrayUtilsDeepForWithByteArrayTest extends AbstractDeepForTest<byte
 
         return array[axis[0]];
     }
+
+    @Override
+    protected byte[] emptyArray() {
+
+        return new byte[0];
+    }
 }

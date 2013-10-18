@@ -7,10 +7,12 @@ import static java.lang.reflect.Array.get;
 import static java.lang.reflect.Array.getLength;
 import static java.lang.reflect.Array.newInstance;
 import static java.lang.reflect.Array.set;
+import static shiver.me.timbers.ArrayChecks.*;
 import static shiver.me.timbers.ArrayReflections.findDimensions;
 import static shiver.me.timbers.ArrayReflections.isArray;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
 import static shiver.me.timbers.Asserts.isNotNull;
+import static shiver.me.timbers.Asserts.isNull;
 
 /**
  * A class that contains useful helper methods for manipulating arrays.
@@ -70,7 +72,7 @@ public final class ArrayUtils {
     @SuppressWarnings("unchecked")
     private static <A> A innerDeepCopyOf(A array) {
 
-        if (isNotArray(array) || 0 >= getLength(array)) return array;
+        if (isNotArray(array) || innerIsEmpty(array)) return array;
 
         return innerDeepCopyOf(array, (A) newInstance(array.getClass().getComponentType(), Array.getLength(array)), 0,
                 0, new int[findDimensions(array)]);
@@ -166,6 +168,62 @@ public final class ArrayUtils {
     }
 
     /**
+     * This method recursively iterates over all the elements within the supplied array.
+     *
+     * @param array     the array that will be iterated over.
+     * @param dimension the current dimension of the array that the recursion has reached.
+     * @param index     the current index of the current dimension.
+     * @param axisArray the axis of the current iteration. This may only be partially populated depending on the current
+     *                  dimension.
+     * @param each      the each interface that will be used to expose the value and axis of each iteration to the user.
+     * @return {@code true} to keep recursing, otherwise {@code false} to stop the recursion.
+     */
+    @SuppressWarnings("unchecked")
+    private static <T, E extends Throwable> void deepForEach(Object array, int dimension, int index, int[] axisArray,
+                                                          Each<T, E> each) throws E {
+
+        // If we have reached a leaf in the array then stop recursing and produce the current value and axis.
+        if (isNotArray(array)) {
+
+            each.run((T) array, axisArray);
+
+            return;
+        }
+
+        // If the current array is empty then no further iteration is required.
+        if (innerIsEmpty(array)) {
+
+            return;
+        }
+
+        // Otherwise we are on a branch so recursively iterate over all it's elements.
+        for (int i = index; i < getLength(array); i++) {
+
+            axisArray[dimension] = i;
+
+            deepForEach(get(array, i), dimension + 1, 0, axisArray, each);
+        }
+    }
+
+    /**
+     * This private method executes the actual iteration. The problem is it takes an {@link Object} type which doesn't
+     * provide any type safety, which means the method could be called on an object that isn't an array. For this reason
+     * it has been wrapped by type safe public methods.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    private static <T, E extends Throwable> void deepFor(Object array, Each<T, E> each) throws E {
+
+        if (innerIsEmpty(array)) {
+
+            return;
+        }
+
+        deepForEach(array, 0, 0, new int[findDimensions(array)], each);
+    }
+
+    /**
      * Iterate over all the elements within an array that has any number of dimensions.
      *
      * @param array the array to iterate over.
@@ -173,6 +231,7 @@ public final class ArrayUtils {
      */
     public static <A, T, E extends Throwable> void deepFor(A[] array, Each<T, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -183,6 +242,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(byte[] array, Each<Byte, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -193,6 +253,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(char[] array, Each<Character, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -203,6 +264,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(short[] array, Each<Short, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -213,6 +275,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(int[] array, Each<Integer, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -223,6 +286,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(long[] array, Each<Long, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -233,6 +297,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(float[] array, Each<Float, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
@@ -243,6 +308,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(double[] array, Each<Double, E> each) throws E {
 
+        deepFor((Object) array, each);
     }
 
     /**
