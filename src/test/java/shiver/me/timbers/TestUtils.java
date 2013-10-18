@@ -2,6 +2,8 @@ package shiver.me.timbers;
 
 import java.lang.reflect.Array;
 
+import static shiver.me.timbers.Asserts.*;
+
 /**
  * A utility class that contains helper methods for testing the array utility methods.
  *
@@ -20,6 +22,8 @@ public final class TestUtils {
      * @return the converted array {@link Object}.
      */
     public static Object[] objectToArray(Object object) {
+
+        if (isNull(object)) return null;
 
         final int length = Array.getLength(object);
 

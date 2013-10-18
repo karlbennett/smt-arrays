@@ -1,6 +1,16 @@
 package shiver.me.timbers;
 
+import java.lang.reflect.Array;
 import java.util.List;
+
+import static java.lang.reflect.Array.get;
+import static java.lang.reflect.Array.getLength;
+import static java.lang.reflect.Array.newInstance;
+import static java.lang.reflect.Array.set;
+import static shiver.me.timbers.ArrayReflections.findDimensions;
+import static shiver.me.timbers.ArrayReflections.isArray;
+import static shiver.me.timbers.ArrayReflections.isNotArray;
+import static shiver.me.timbers.Asserts.isNotNull;
 
 /**
  * A class that contains useful helper methods for manipulating arrays.
@@ -13,6 +23,60 @@ public final class ArrayUtils {
     }
 
     /**
+     * The recursive deep copy method that is initialised in the public {@link #deepCopyOf} method.
+     *
+     * @param array       the array to copy.
+     * @param copiedArray the array that will hold the copied values.
+     * @param dimension   the current array dimension that is being populated.
+     * @param index       the index to start copying from.
+     * @param axis        the axis of the current element.
+     */
+    @SuppressWarnings("unchecked")
+    private static <A> A innerDeepCopyOf(A array, A copiedArray, int dimension, int index, int[] axis) {
+        // Record the current iterations axis.
+        axis[dimension] = index;
+
+        // If the current index is greater than the max index of the current array then we must have finished copying.
+        if (index >= getLength(array)) return copiedArray;
+
+        // Otherwise copy the next element in the array.
+        Object element = get(array, index);
+
+        // If the next element is an array then it needs to be deep copied.
+        if (isNotNull(element) && isArray(element)) {
+
+            set(copiedArray, index, innerDeepCopyOf(
+                    element,
+                    newInstance(
+                            element.getClass().getComponentType(),
+                            getLength(element)),
+                    dimension + 1, 0, axis));
+
+        } else {
+            // Otherwise just assign it to the same index in the copy array.
+            set(copiedArray, index, element);
+        }
+        // Lastly move onto the next element.
+        return innerDeepCopyOf(array, copiedArray, dimension, ++index, axis);
+    }
+
+    /**
+     * This method just wraps the initialisation of the main deep copy logic so that it can be reused in the public
+     * methods.
+     *
+     * @param array the array to copy.
+     * @return the copied array.
+     */
+    @SuppressWarnings("unchecked")
+    private static <A> A innerDeepCopyOf(A array) {
+
+        if (isNotArray(array) || 0 >= getLength(array)) return array;
+
+        return innerDeepCopyOf(array, (A) newInstance(array.getClass().getComponentType(), Array.getLength(array)), 0,
+                0, new int[findDimensions(array)]);
+    }
+
+    /**
      * Carry out a deep copy of the supplied array, that is create a new array for each dimension, not a deep copy of
      * the containing objects.
      *
@@ -21,7 +85,7 @@ public final class ArrayUtils {
      */
     public static <T> T[] deepCopyOf(T[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -32,7 +96,7 @@ public final class ArrayUtils {
      */
     public static byte[] deepCopyOf(byte[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -43,7 +107,7 @@ public final class ArrayUtils {
      */
     public static char[] deepCopyOf(char[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -54,7 +118,7 @@ public final class ArrayUtils {
      */
     public static short[] deepCopyOf(short[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -65,7 +129,7 @@ public final class ArrayUtils {
      */
     public static int[] deepCopyOf(int[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -76,7 +140,7 @@ public final class ArrayUtils {
      */
     public static long[] deepCopyOf(long[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -87,7 +151,7 @@ public final class ArrayUtils {
      */
     public static float[] deepCopyOf(float[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
@@ -98,7 +162,7 @@ public final class ArrayUtils {
      */
     public static double[] deepCopyOf(double[] array) {
 
-        return null;
+        return innerDeepCopyOf(array);
     }
 
     /**
