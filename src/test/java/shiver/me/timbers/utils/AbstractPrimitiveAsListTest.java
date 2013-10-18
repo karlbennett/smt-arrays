@@ -36,9 +36,9 @@ public abstract class AbstractPrimitiveAsListTest<T, A> {
         assertEquals("the list should be correct.", list, primitiveAsList(array));
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void testPrimitiveAsListWithNull() {
 
-        assertNull("null should produce null.", primitiveAsList(null));
+        primitiveAsList(null);
     }
 }

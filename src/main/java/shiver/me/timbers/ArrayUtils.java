@@ -1,6 +1,8 @@
 package shiver.me.timbers;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.reflect.Array.get;
@@ -176,7 +178,6 @@ public final class ArrayUtils {
      * @param axisArray the axis of the current iteration. This may only be partially populated depending on the current
      *                  dimension.
      * @param each      the each interface that will be used to expose the value and axis of each iteration to the user.
-     * @return {@code true} to keep recursing, otherwise {@code false} to stop the recursion.
      */
     @SuppressWarnings("unchecked")
     private static <T, E extends Throwable> void innerDeepFor(Object array, int dimension, int index, int[] axisArray,
@@ -552,7 +553,7 @@ public final class ArrayUtils {
      */
     public static List<Byte> primitiveAsList(byte... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
@@ -563,7 +564,7 @@ public final class ArrayUtils {
      */
     public static List<Character> primitiveAsList(char... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
@@ -574,7 +575,7 @@ public final class ArrayUtils {
      */
     public static List<Short> primitiveAsList(short... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
@@ -585,7 +586,7 @@ public final class ArrayUtils {
      */
     public static List<Integer> primitiveAsList(int... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
@@ -596,7 +597,7 @@ public final class ArrayUtils {
      */
     public static List<Long> primitiveAsList(long... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
@@ -607,7 +608,7 @@ public final class ArrayUtils {
      */
     public static List<Float> primitiveAsList(float... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
@@ -618,7 +619,7 @@ public final class ArrayUtils {
      */
     public static List<Double> primitiveAsList(double... values) {
 
-        return null;
+        return Arrays.asList(deepAutoBox(values));
     }
 
     /**
