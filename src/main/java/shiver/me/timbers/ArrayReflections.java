@@ -1,6 +1,7 @@
 package shiver.me.timbers;
 
 import static shiver.me.timbers.Asserts.isNotNull;
+import static shiver.me.timbers.Asserts.isNull;
 
 /**
  * A class that contains useful helper methods for manipulating arrays.
@@ -91,6 +92,8 @@ public final class ArrayReflections {
      */
     public static int findDimensions(Object array) {
 
-        return 0;
+        if (isNull(array) || isNotArray(array)) return 0;
+
+        return array.getClass().getName().split("\\[").length - 1;
     }
 }

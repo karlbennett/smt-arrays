@@ -40,7 +40,7 @@ public class ArrayReflectionsFindDimensionsTest {
     @Test
     public void testFindDimensionsWithNull() {
 
-        assertFindDimensions(1, null);
+        assertFindDimensions(0, null);
     }
 
     private static void assertFindDimensions(int dimensions, Object array) {
