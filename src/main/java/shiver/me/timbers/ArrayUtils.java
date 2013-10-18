@@ -12,7 +12,6 @@ import static shiver.me.timbers.ArrayReflections.findDimensions;
 import static shiver.me.timbers.ArrayReflections.isArray;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
 import static shiver.me.timbers.Asserts.isNotNull;
-import static shiver.me.timbers.Asserts.isNull;
 
 /**
  * A class that contains useful helper methods for manipulating arrays.
@@ -179,8 +178,8 @@ public final class ArrayUtils {
      * @return {@code true} to keep recursing, otherwise {@code false} to stop the recursion.
      */
     @SuppressWarnings("unchecked")
-    private static <T, E extends Throwable> void deepForEach(Object array, int dimension, int index, int[] axisArray,
-                                                          Each<T, E> each) throws E {
+    private static <T, E extends Throwable> void innerDeepFor(Object array, int dimension, int index, int[] axisArray,
+                                                              Each<T, E> each) throws E {
 
         // If we have reached a leaf in the array then stop recursing and produce the current value and axis.
         if (isNotArray(array)) {
@@ -201,7 +200,7 @@ public final class ArrayUtils {
 
             axisArray[dimension] = i;
 
-            deepForEach(get(array, i), dimension + 1, 0, axisArray, each);
+            innerDeepFor(get(array, i), dimension + 1, 0, axisArray, each);
         }
     }
 
@@ -213,14 +212,14 @@ public final class ArrayUtils {
      * @param array the array to iterate over.
      * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
      */
-    private static <T, E extends Throwable> void deepFor(Object array, Each<T, E> each) throws E {
+    private static <T, E extends Throwable> void innerDeepFor(Object array, Each<T, E> each) throws E {
 
         if (innerIsEmpty(array)) {
 
             return;
         }
 
-        deepForEach(array, 0, 0, new int[findDimensions(array)], each);
+        innerDeepFor(array, 0, 0, new int[findDimensions(array)], each);
     }
 
     /**
@@ -231,7 +230,7 @@ public final class ArrayUtils {
      */
     public static <A, T, E extends Throwable> void deepFor(A[] array, Each<T, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -242,7 +241,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(byte[] array, Each<Byte, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -253,7 +252,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(char[] array, Each<Character, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -264,7 +263,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(short[] array, Each<Short, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -275,7 +274,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(int[] array, Each<Integer, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -286,7 +285,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(long[] array, Each<Long, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -297,7 +296,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(float[] array, Each<Float, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -308,7 +307,7 @@ public final class ArrayUtils {
      */
     public static <E extends Throwable> void deepFor(double[] array, Each<Double, E> each) throws E {
 
-        deepFor((Object) array, each);
+        innerDeepFor(array, each);
     }
 
     /**
@@ -557,7 +556,7 @@ public final class ArrayUtils {
     }
 
     /**
-     * An interface that can be used with any of the {@link #deepFor} methods to expose the current iterations element
+     * An interface that can be used with any of the {@link #innerDeepFor} methods to expose the current iterations element
      * and axis.
      */
     public static interface Each<T, E extends Throwable> {
