@@ -10,9 +10,9 @@ import static shiver.me.timbers.Constants.NOT_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayIsArrayWithObjectTest extends AbstractCheckAndAssertTest<Object> {
+public class ArrayReflectionsIsArrayWithObjectTest extends AbstractCheckAndAssertTest<Object> {
 
-    public ArrayIsArrayWithObjectTest() {
+    public ArrayReflectionsIsArrayWithObjectTest() {
         super(ARRAY, NOT_ARRAY);
     }
 

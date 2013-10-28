@@ -1,6 +1,5 @@
 package shiver.me.timbers.checks;
 
-import org.junit.Test;
 import shiver.me.timbers.AbstractCheckAndAssertTest;
 
 import static shiver.me.timbers.ArrayAsserts.assertIsBlank;

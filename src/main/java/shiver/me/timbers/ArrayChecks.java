@@ -1,10 +1,5 @@
 package shiver.me.timbers;
 
-import java.lang.reflect.Array;
-
-import static shiver.me.timbers.ArrayReflections.isNotArray;
-import static shiver.me.timbers.Asserts.*;
-
 /**
  * A class that contains useful helper methods for manipulating arrays.
  *
@@ -16,44 +11,6 @@ public final class ArrayChecks {
     }
 
     /**
-     * A private inner method that carries out the actual {@code isEmpty} recursive logic on any given object. If the
-     * object is not an array then the method will return {@code false}.
-     *
-     * @param object the array to check.
-     * @return {@code true} if the array has a length of zero, or it's final dimension has length zero, otherwise
-     *         return false.
-     */
-    static boolean innerIsEmpty(Object object) {
-
-        if (isNull(object)) {
-
-            return true;
-        }
-
-        if (isNotArray(object)) {
-
-            return false;
-        }
-
-        final int length = Array.getLength(object);
-
-        if (isNotArray(object.getClass().getComponentType())) {
-
-            return 0 == length;
-        }
-
-        for (int i = 0; i < length; i++) {
-
-            if (!innerIsEmpty(Array.get(object, i))) {
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Check that the supplied array is empty, that is if it is {@code null} or it's final dimension has a length of
      * {@code 0}.
      *
@@ -62,7 +19,7 @@ public final class ArrayChecks {
      */
     public static <T> boolean isEmpty(T[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -73,7 +30,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(byte[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -84,7 +41,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(char[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -95,7 +52,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(short[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -106,7 +63,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(int[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -117,7 +74,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(long[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -128,7 +85,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(float[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -139,7 +96,7 @@ public final class ArrayChecks {
      */
     public static boolean isEmpty(double[] array) {
 
-        return innerIsEmpty(array);
+        return ArrayReflections.isEmpty(array);
     }
 
     /**
@@ -231,64 +188,6 @@ public final class ArrayChecks {
         return !isEmpty(array);
     }
 
-    private static boolean innerIsBlank(Object object) {
-
-        if (innerIsEmpty(object)) {
-
-            return true;
-        }
-
-        if (Byte.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals((byte) 0);
-        }
-
-        if (Character.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals((char) 0);
-        }
-
-        if (Short.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals((short) 0);
-        }
-
-        if (Integer.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals(0);
-        }
-
-        if (Long.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals((long) 0);
-        }
-
-        if (Float.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals((float) 0);
-        }
-
-        if (Double.class.isAssignableFrom(object.getClass())) {
-
-            return object.equals((double) 0);
-        }
-
-        if (isNotArray(object)) {
-
-            return false;
-        }
-
-        for (int i = 0; i < Array.getLength(object); i++) {
-
-            if (!innerIsBlank(Array.get(object, i))) {
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     /**
      * Check that the supplied array is blank, that is if a call to {@link #isEmpty(T[])} would return {@code true}
      * or of it only contains {@code null} values.
@@ -298,7 +197,7 @@ public final class ArrayChecks {
      */
     public static <T> boolean isBlank(T[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -310,7 +209,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(byte[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -322,7 +221,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(char[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -334,7 +233,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(short[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -346,7 +245,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(int[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -358,7 +257,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(long[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -370,7 +269,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(float[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**
@@ -382,7 +281,7 @@ public final class ArrayChecks {
      */
     public static boolean isBlank(double[] array) {
 
-        return innerIsBlank(array);
+        return ArrayReflections.isBlank(array);
     }
 
     /**

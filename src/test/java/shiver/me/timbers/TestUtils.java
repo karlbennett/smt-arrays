@@ -2,7 +2,7 @@ package shiver.me.timbers;
 
 import java.lang.reflect.Array;
 
-import static shiver.me.timbers.Asserts.*;
+import static shiver.me.timbers.Asserts.isNull;
 
 /**
  * A utility class that contains helper methods for testing the array utility methods.

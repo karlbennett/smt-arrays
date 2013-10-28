@@ -1,9 +1,8 @@
 package shiver.me.timbers;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 /**
  * Test values.

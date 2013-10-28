@@ -1,6 +1,9 @@
 package shiver.me.timbers;
 
-import static shiver.me.timbers.ArrayChecks.*;
+import static shiver.me.timbers.ArrayChecks.isBlank;
+import static shiver.me.timbers.ArrayChecks.isEmpty;
+import static shiver.me.timbers.ArrayChecks.isNotBlank;
+import static shiver.me.timbers.ArrayChecks.isNotEmpty;
 import static shiver.me.timbers.ArrayReflections.isArray;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
 import static shiver.me.timbers.Asserts.assertIsTrue;

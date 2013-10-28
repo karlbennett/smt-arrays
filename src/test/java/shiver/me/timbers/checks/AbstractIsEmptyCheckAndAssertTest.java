@@ -4,7 +4,6 @@ import org.junit.Test;
 import shiver.me.timbers.AbstractCheckAndAssertTest;
 
 import static org.junit.Assert.assertTrue;
-import static shiver.me.timbers.ArrayChecks.isEmpty;
 
 /**
  * @author Karl Bennett

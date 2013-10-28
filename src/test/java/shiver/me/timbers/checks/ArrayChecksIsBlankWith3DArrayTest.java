@@ -1,7 +1,5 @@
 package shiver.me.timbers.checks;
 
-import shiver.me.timbers.AbstractCheckAndAssertTest;
-
 import static shiver.me.timbers.ArrayAsserts.assertIsBlank;
 import static shiver.me.timbers.ArrayChecks.isBlank;
 import static shiver.me.timbers.Constants.NOT_BLANK_3D_ARRAY;

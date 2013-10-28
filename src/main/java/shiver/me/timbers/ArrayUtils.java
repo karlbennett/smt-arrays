@@ -1,7 +1,6 @@
 package shiver.me.timbers;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,10 +8,10 @@ import static java.lang.reflect.Array.get;
 import static java.lang.reflect.Array.getLength;
 import static java.lang.reflect.Array.newInstance;
 import static java.lang.reflect.Array.set;
-import static shiver.me.timbers.ArrayChecks.innerIsEmpty;
 import static shiver.me.timbers.ArrayReflections.findComponentType;
 import static shiver.me.timbers.ArrayReflections.findDimensions;
 import static shiver.me.timbers.ArrayReflections.isArray;
+import static shiver.me.timbers.ArrayReflections.isEmpty;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
 import static shiver.me.timbers.Asserts.isNotNull;
 
@@ -74,7 +73,7 @@ public final class ArrayUtils {
     @SuppressWarnings("unchecked")
     private static <A> A innerDeepCopyOf(A array) {
 
-        if (isNotArray(array) || innerIsEmpty(array)) return array;
+        if (isNotArray(array) || isEmpty(array)) return array;
 
         return innerDeepCopyOf(array, (A) newInstance(array.getClass().getComponentType(), Array.getLength(array)), 0,
                 0, new int[findDimensions(array)]);
@@ -192,7 +191,7 @@ public final class ArrayUtils {
         }
 
         // If the current array is empty then no further iteration is required.
-        if (innerIsEmpty(array)) {
+        if (isEmpty(array)) {
 
             return;
         }
@@ -216,7 +215,7 @@ public final class ArrayUtils {
      */
     private static <T, E extends Throwable> void innerDeepFor(Object array, Each<T, E> each) throws E {
 
-        if (innerIsEmpty(array)) {
+        if (isEmpty(array)) {
 
             return;
         }
