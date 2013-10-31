@@ -41,13 +41,13 @@ public class ArrayReflectionsFindComponentTypeTest {
     @Test
     public void testFindComponentTypeWithEmpty2DArray() {
 
-        assertComponentType(Object.class, new Object[0][0]);
+        assertComponentType(Object.class, new Object[0][]);
     }
 
     @Test
     public void testFindComponentTypeWithEmpty3DArray() {
 
-        assertComponentType(Object.class, new Object[0][0][0]);
+        assertComponentType(Object.class, new Object[0][][]);
     }
 
     @Test(expected = NullPointerException.class)
