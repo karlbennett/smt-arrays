@@ -1,8 +1,9 @@
 package shiver.me.timbers.reflections;
 
-import org.junit.Test;
-import shiver.me.timbers.AbstractCheckAndAssertTest;
+import shiver.me.timbers.AbstractNegativeArrayCheckAndAssertTest;
+import shiver.me.timbers.AbstractPositiveArrayCheckAndAssertTest;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static shiver.me.timbers.ArrayAsserts.assertIsNotBlank;
 import static shiver.me.timbers.ArrayReflections.isNotBlank;
@@ -12,7 +13,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayReflectionsIsNotBlankWithObjectTest extends AbstractCheckAndAssertTest<Object> {
+public class ArrayReflectionsIsNotBlankWithObjectTest extends AbstractNegativeArrayCheckAndAssertTest<Object> {
 
     public ArrayReflectionsIsNotBlankWithObjectTest() {
         super(NOT_BLANK_ARRAY, NOT_EMPTY_ARRAY);
@@ -30,9 +31,9 @@ public class ArrayReflectionsIsNotBlankWithObjectTest extends AbstractCheckAndAs
         assertIsNotBlank(message, (Object[]) value);
     }
 
-    @Test
-    public void testIsBlankWithNonArray() {
+    @Override
+    protected Object create() {
 
-        assertTrue("an object should not be blank.", isNotBlank(new Object()));
+        return new Object();
     }
 }
