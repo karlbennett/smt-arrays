@@ -23,9 +23,7 @@ public class ArrayUtilsDeepCopyOfWith3DArrayTest extends AbstractDeepCopyTest<Ob
     protected Object[][][] manualCopyOf(Object[][][] array) {
 
         return new Object[][][]{
-                {
-                        NOT_BLANK_3D_ARRAY[0][0]
-                },
+                NOT_BLANK_3D_ARRAY[0],
                 {
                         NOT_BLANK_3D_ARRAY[1][0],
                         {NOT_BLANK_3D_ARRAY[1][1][0]},
@@ -35,7 +33,8 @@ public class ArrayUtilsDeepCopyOfWith3DArrayTest extends AbstractDeepCopyTest<Ob
                         {NOT_BLANK_3D_ARRAY[2][0][0], NOT_BLANK_3D_ARRAY[2][0][1], NOT_BLANK_3D_ARRAY[2][0][2]},
                         {NOT_BLANK_3D_ARRAY[2][1][0], NOT_BLANK_3D_ARRAY[2][1][1], NOT_BLANK_3D_ARRAY[2][1][2]},
                         {NOT_BLANK_3D_ARRAY[2][2][0], NOT_BLANK_3D_ARRAY[2][2][1], NOT_BLANK_3D_ARRAY[2][2][2]}
-                }
+                },
+                NOT_BLANK_3D_ARRAY[3]
         };
     }
 

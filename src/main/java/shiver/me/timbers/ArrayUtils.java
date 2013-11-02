@@ -185,6 +185,13 @@ public final class ArrayUtils {
         // If we have reached a leaf in the array then stop recursing and produce the current value and axis.
         if (isNotArray(array)) {
 
+            // If we have found a leaf but aren't at the final dimension then we don't have an actual value so should
+            // just bail out.
+            if (axisArray.length > dimension) {
+
+                return;
+            }
+
             each.run((T) array, axisArray);
 
             return;

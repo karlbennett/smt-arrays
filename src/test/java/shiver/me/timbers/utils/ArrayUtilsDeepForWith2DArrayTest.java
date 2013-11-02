@@ -12,6 +12,7 @@ public class ArrayUtilsDeepForWith2DArrayTest extends AbstractDeepForTest<Object
 
     private static final int[][] COUNT_MATRIX = {
             {1, 0},
+            {1, 1},
             {2, 0},
             {2, 1},
     };
@@ -29,7 +30,7 @@ public class ArrayUtilsDeepForWith2DArrayTest extends AbstractDeepForTest<Object
     @Override
     protected int arrayElementNumber() {
 
-        return 3;
+        return 4;
     }
 
     @Override

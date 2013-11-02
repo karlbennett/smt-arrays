@@ -433,16 +433,14 @@ public class Constants {
 
     public static final Object[][] NOT_BLANK_2D_ARRAY = {
             {},
-            {new Object()},
+            {new Object(), null},
             {new Object(), new Object()}
     };
 
     public static final Object[][][] NOT_BLANK_3D_ARRAY = {
+            null,
             {
-                    {}
-            },
-            {
-                    {},
+                    null,
                     {new Object()},
                     {new Object(), new Object()}
             },
@@ -450,7 +448,8 @@ public class Constants {
                     {new Object(), new Object(), new Object()},
                     {new Object(), new Object(), new Object()},
                     {new Object(), new Object(), new Object()}
-            }
+            },
+            null
     };
 
     public static final Object[] EMPTY_ARRAY = new Object[0];

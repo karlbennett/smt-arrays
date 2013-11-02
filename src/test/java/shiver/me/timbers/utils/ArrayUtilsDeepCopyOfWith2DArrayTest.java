@@ -24,7 +24,7 @@ public class ArrayUtilsDeepCopyOfWith2DArrayTest extends AbstractDeepCopyTest<Ob
 
         return new Object[][]{
                 NOT_BLANK_2D_ARRAY[0],
-                {NOT_BLANK_2D_ARRAY[1][0]},
+                {NOT_BLANK_2D_ARRAY[1][0], NOT_BLANK_2D_ARRAY[1][1]},
                 {NOT_BLANK_2D_ARRAY[2][0], NOT_BLANK_2D_ARRAY[2][1]}
         };
     }
