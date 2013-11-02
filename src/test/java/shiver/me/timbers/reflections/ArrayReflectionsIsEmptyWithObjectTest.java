@@ -1,7 +1,5 @@
 package shiver.me.timbers.reflections;
 
-import shiver.me.timbers.AbstractPositiveArrayCheckAndAssertTest;
-
 import static shiver.me.timbers.ArrayAsserts.assertIsEmpty;
 import static shiver.me.timbers.ArrayReflections.isEmpty;
 import static shiver.me.timbers.Constants.EMPTY_ARRAY;

@@ -1,5 +1,7 @@
 package shiver.me.timbers.checks;
 
+import shiver.me.timbers.AbstractCheckAndAssertNullFalseTest;
+
 import static shiver.me.timbers.ArrayAsserts.assertIsNotBlank;
 import static shiver.me.timbers.ArrayChecks.isNotBlank;
 import static shiver.me.timbers.Constants.NOT_BLANK_2D_ARRAY;
@@ -8,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_2D_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsNotBlankWith2DArrayTest extends AbstractIsNotEmptyCheckAndAssertTest<Object[][]> {
+public class ArrayChecksIsNotBlankWith2DArrayTest extends AbstractCheckAndAssertNullFalseTest<Object[][]> {
 
     public ArrayChecksIsNotBlankWith2DArrayTest() {
         super(NOT_BLANK_2D_ARRAY, NOT_EMPTY_2D_ARRAY);

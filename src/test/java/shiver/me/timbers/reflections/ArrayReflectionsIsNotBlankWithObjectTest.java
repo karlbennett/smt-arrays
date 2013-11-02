@@ -1,10 +1,5 @@
 package shiver.me.timbers.reflections;
 
-import shiver.me.timbers.AbstractNegativeArrayCheckAndAssertTest;
-import shiver.me.timbers.AbstractPositiveArrayCheckAndAssertTest;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static shiver.me.timbers.ArrayAsserts.assertIsNotBlank;
 import static shiver.me.timbers.ArrayReflections.isNotBlank;
 import static shiver.me.timbers.Constants.NOT_BLANK_ARRAY;

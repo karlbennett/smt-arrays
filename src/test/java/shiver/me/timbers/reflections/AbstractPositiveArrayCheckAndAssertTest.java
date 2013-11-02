@@ -1,9 +1,9 @@
-package shiver.me.timbers;
+package shiver.me.timbers.reflections;
 
 import org.junit.Test;
+import shiver.me.timbers.AbstractCheckAndAssertTest;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Karl Bennett
@@ -19,15 +19,15 @@ public abstract class AbstractPositiveArrayCheckAndAssertTest<T> extends Abstrac
      */
     protected abstract T create();
 
+    @Override
+    protected boolean nullResult() {
+
+        return true;
+    }
+
     @Test
     public void testCheckWithNonArray() {
 
         assertFalse("an object should not pass that check.", doCheck(create()));
-    }
-
-    @Test
-    public void testCheckWithNull() {
-
-        assertTrue("null should be pass that check.", doCheck(null));
     }
 }

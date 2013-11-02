@@ -7,6 +7,7 @@ import static shiver.me.timbers.ArrayReflections.findDimensions;
 import static shiver.me.timbers.Constants.ARRAY;
 import static shiver.me.timbers.Constants.BYTES_2D;
 import static shiver.me.timbers.Constants.BYTES_3D;
+import static shiver.me.timbers.Constants.NOT_ARRAY;
 
 /**
  * @author Karl Bennett
@@ -35,6 +36,12 @@ public class ArrayReflectionsFindDimensionsTest {
     public void testFindDimensionsWithEmpty3DArray() {
 
         assertFindDimensions(3, new Object[0][0][0]);
+    }
+
+    @Test
+    public void testFindDimensionsWithNonArray() {
+
+        assertFindDimensions(0, NOT_ARRAY);
     }
 
     @Test

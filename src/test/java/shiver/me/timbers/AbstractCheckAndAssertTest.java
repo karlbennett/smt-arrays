@@ -43,11 +43,22 @@ public abstract class AbstractCheckAndAssertTest<T> {
      */
     protected abstract void doAssert(String message, T value);
 
+    /**
+     * @return the correct boolean result of running the check against {@code null}.
+     */
+    protected abstract boolean nullResult();
+
     @Test
-    public void testIs() {
+    public void testCheck() {
 
         assertThat("should be true for (" + isValue + ")", doCheck(isValue), CoreMatchers.is(true));
         assertThat("should be false for not (" + isNotValue + ")", doCheck(isNotValue), CoreMatchers.not(true));
+    }
+
+    @Test
+    public void testCheckWithNull() {
+
+        assertThat("should be " + nullResult() + " for null", doCheck(null), CoreMatchers.is(nullResult()));
     }
 
     @Test
