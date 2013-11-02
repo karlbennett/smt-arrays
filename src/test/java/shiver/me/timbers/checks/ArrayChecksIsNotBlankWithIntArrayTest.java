@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_INT_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsNotBlankWithIntArrayTest extends AbstractCheckAndAssertNullFalseTest<int[]> {
+public class ArrayChecksIsNotBlankWithIntArrayTest extends AbstractIsNotBlankTest<int[]> {
 
     public ArrayChecksIsNotBlankWithIntArrayTest() {
         super(INTS_1D, NOT_EMPTY_INT_ARRAY);

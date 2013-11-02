@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.SHORTS_1D;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsNotBlankWithShortArrayTest extends AbstractCheckAndAssertNullFalseTest<short[]> {
+public class ArrayChecksIsNotBlankWithShortArrayTest extends AbstractIsNotBlankTest<short[]> {
 
     public ArrayChecksIsNotBlankWithShortArrayTest() {
         super(SHORTS_1D, NOT_EMPTY_SHORT_ARRAY);

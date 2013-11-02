@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_CHAR_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsNotEmptyWithCharArrayTest extends AbstractCheckAndAssertNullFalseTest<char[]> {
+public class ArrayChecksIsNotEmptyWithCharArrayTest extends AbstractIsNotEmptyTest<char[]> {
 
     public ArrayChecksIsNotEmptyWithCharArrayTest() {
         super(NOT_EMPTY_CHAR_ARRAY, EMPTY_CHAR_ARRAY);

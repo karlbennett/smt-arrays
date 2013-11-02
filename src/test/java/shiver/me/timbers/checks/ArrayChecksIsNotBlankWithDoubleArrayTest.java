@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_DOUBLE_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsNotBlankWithDoubleArrayTest extends AbstractCheckAndAssertNullFalseTest<double[]> {
+public class ArrayChecksIsNotBlankWithDoubleArrayTest extends AbstractIsNotBlankTest<double[]> {
 
     public ArrayChecksIsNotBlankWithDoubleArrayTest() {
         super(DOUBLES_1D, NOT_EMPTY_DOUBLE_ARRAY);

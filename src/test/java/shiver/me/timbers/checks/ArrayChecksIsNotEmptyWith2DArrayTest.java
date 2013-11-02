@@ -10,7 +10,7 @@ import static shiver.me.timbers.Constants.NOT_EMPTY_2D_ARRAY;
 /**
  * @author Karl Bennett
  */
-public class ArrayChecksIsNotEmptyWith2DArrayTest extends AbstractCheckAndAssertNullFalseTest<Object[][]> {
+public class ArrayChecksIsNotEmptyWith2DArrayTest extends AbstractIsNotEmptyTest<Object[][]> {
 
     public ArrayChecksIsNotEmptyWith2DArrayTest() {
         super(NOT_EMPTY_2D_ARRAY, EMPTY_2D_ARRAY);
