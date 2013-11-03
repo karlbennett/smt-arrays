@@ -1,5 +1,5 @@
-The [`ArrayReflections`](apidocs/shiver/me/timbers/ArrayChecks.html) class contains type safe versions of the
-[`ArrayReflections`](apidocs/shiver/me/timbers/ArrayReflections.html)
+The [`ArrayChecks`](apidocs/shiver/me/timbers/ArrayChecks.html) class contains type safe versions of the
+[`ArrayReflections`](ArrayReflections.html)
 [`isEmpty`/`isNotEmpty`](ArrayReflections.html#isEmptyObject:booleanisNotEmptyObject:boolean) and
 [`isBlank`/`isNotBlank`](ArrayReflections.html#isBlankObject:booleanisNotBlankObject:boolean) methods.
 These behave in exactly the same way but can only be called with an array.

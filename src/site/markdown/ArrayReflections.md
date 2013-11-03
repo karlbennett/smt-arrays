@@ -1,7 +1,7 @@
 The [`ArrayReflections`](apidocs/shiver/me/timbers/ArrayReflections.html) class contains reflection methods for
 inspecting the existence and status of arrays.
 
-#### isArray(Class|Object):boolean
+#### isArray(Class|Object):boolean/isNotArray(Class|Object):boolean
 
 Check if the supplied `Object` or `Class` is that of an array.
 
