@@ -34,6 +34,8 @@ public final class TestUtils {
             array[i] = Array.get(object, i);
         }
 
+        Object blah = new short[][][]{{{1, 2}, null}, null};
+
         return array;
     }
 }
