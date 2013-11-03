@@ -23,7 +23,7 @@ public class ArrayReflectionsIsNotEmptyWithObjectTest extends AbstractNegativeAr
     @Override
     protected void doAssert(String message, Object value) {
 
-        assertIsNotEmpty(message, (Object[]) value);
+        assertIsNotEmpty(message, value);
     }
 
     @Override

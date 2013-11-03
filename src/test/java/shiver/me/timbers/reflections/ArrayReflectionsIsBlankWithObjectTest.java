@@ -23,7 +23,7 @@ public class ArrayReflectionsIsBlankWithObjectTest extends AbstractPositiveArray
     @Override
     protected void doAssert(String message, Object value) {
 
-        assertIsBlank(message, (Object[]) value);
+        assertIsBlank(message, value);
     }
 
     @Override
