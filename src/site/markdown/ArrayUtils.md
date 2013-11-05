@@ -153,7 +153,7 @@ deepFor(array, new Each<Integer, RuntimeException>() {
 </pre>
 
 Each element is exposed to the user by implementing the
-[`Each<T, E>`](site/apidocs/shiver/me/timbers/ArrayUtils.Each.html) interfaces `run(T,int[]) throws E`. The first
+[`Each<T, E>`](site/apidocs/shiver/me/timbers/ArrayUtils.Each.html) interfaces `run(T,int[]) throws E` method. The first
 argument of this method is the element for the current iteration, the second argument is an array containing the axis of
 the current element. The axis array will have a length equal to the number of dimensions of the array, so for a 3D array
 the axis with have length three and each index will contain an `int` with the index of each dimension. So again for a
