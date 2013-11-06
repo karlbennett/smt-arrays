@@ -10,50 +10,50 @@ will still point at the same object instances. So mutations to the containing ob
 both arrays.
 
 <pre class="source">
-class TestClass {
+<span class="keyWord">class</span> <span class="className">TestClass</span> {
 
-    public int test;
+    <span class="keyWord">public int</span> test;
 
-    public TestClass(int test) {
-        this.test = test;
+    <span class="keyWord">public</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="keyWord">int</span> test<span class="parentheses">)</span> {
+        <span class="keyWord">this</span>.test = test;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    <span class="annotation">@Override</span>
+    <span class="keyWord">public boolean</span> <span class="methodName">equals</span><span class="parentheses">(</span>Object o<span class="parentheses">)</span> {
 
-        if (this == o) return true;
+        <span class="keyWord">if</span> <span class="parentheses">(</span><span class="keyWord">this</span> == o<span class="parentheses">)</span> <span class="keyWord">return true</span>;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        <span class="keyWord">if</span> <span class="parentheses">(</span>o == null || <span class="methodName">getClass</span><span class="parentheses">()</span> != o.<span class="methodName">getClass</span><span class="parentheses">())</span> <span class="keyWord">return false</span>;
 
-        TestClass testClass = (TestClass) o;
+        <span class="className">TestClass</span> testClass = <span class="parentheses">(</span><span class="className">TestClass</span><span class="parentheses">)</span> o;
 
-        return test == testClass.test;
+        <span class="keyWord">return</span> test == testClass.test;
     }
 
-    @Override
-    public int hashCode() {
+    <span class="annotation">@Override</span>
+    <span class="keyWord">public int</span> <span class="methodName">hashCode</span><span class="parentheses">()</span> {
 
-        return test;
+        <span class="keyWord">return</span> test;
     }
 }
 
-TestClass[][] tests = {
-        {new TestClass(1), new TestClass(2), new TestClass(3)},
-        {new TestClass(4), new TestClass(5), new TestClass(6)},
-        {new TestClass(7), new TestClass(8), new TestClass(9)},
+<span class="className">TestClass</span>[][] tests = {
+        {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">1</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">2</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">3</span><span class="parentheses">)</span>},
+        {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">4</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">5</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">6</span><span class="parentheses">)</span>},
+        {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">7</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">8</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">9</span><span class="parentheses">)</span>},
 };
 
-TestClass[][] testsCopy = deepCopyOf(tests);
+<span class="className">TestClass</span>[][] testsCopy = <span class="methodName">deepCopyOf</span><span class="parentheses">(</span>tests<span class="parentheses">)</span>;
 
-assertThat(testsCopy, equalTo(tests)); // pass.
+<span class="methodName">assertThat</span><span class="parentheses">(</span>testsCopy, <span class="methodName">equalTo</span><span class="parentheses">(</span>tests<span class="parentheses">))</span>; <span class="comment">// pass.</span>
 
-tests[1][1].test = 99;
+tests[<span class="primitive">1</span>][<span class="primitive">1</span>].test = <span class="primitive">99</span>;
 
-assertThat(testsCopy, equalTo(tests)); // pass.
+<span class="methodName">assertThat</span><span class="parentheses">(</span>testsCopy, <span class="methodName">equalTo</span><span class="parentheses">(</span>tests<span class="parentheses">))</span>; <span class="comment">// pass.</span>
 
-tests[1][1] = new TestClass(100);
+tests[<span class="primitive">1</span>][<span class="primitive">1</span>] = new TestClass<span class="parentheses">(</span><span class="primitive">100</span><span class="parentheses">)</span>;
 
-assertThat(testsCopy, not(equalTo(tests))); // pass.
+<span class="methodName">assertThat</span><span class="parentheses">(</span>testsCopy, <span class="methodName">not</span><span class="parentheses">(</span><span class="methodName">equalTo</span><span class="parentheses">(</span>tests<span class="parentheses">)))</span>; <span class="comment">// pass.</span>
 </pre>
 
 The method can also handle arrays of any shape, they do not have to be square, that is they don't have to have all
@@ -96,7 +96,7 @@ assertThat(testsCopy, not(equalTo(tests))); // pass.
 The `deepFor` method will iterate over every element within an array of any number of dimensions. It does this in the
 with a depth first traversal.
 
-<pre class="source">
+```
 int[][][] array = {
         {
                 {1, 2, 3},
@@ -150,7 +150,7 @@ deepFor(array, new Each<Integer, RuntimeException>() {
 //    [2, 2, 0]: 25
 //    [2, 2, 1]: 26
 //    [2, 2, 2]: 27
-</pre>
+```
 
 Each element is exposed to the user by implementing the
 [`Each<T, E>`](site/apidocs/shiver/me/timbers/ArrayUtils.Each.html) interfaces `run(T,int[]) throws E` method. The first
@@ -169,50 +169,11 @@ The exception that the `deepFor` method throws can be set with the generic typin
 possible to set weather the method throws a checked or runtime exception.
 
 <pre class="source">
-deepFor(array, new Each<Object, RuntimeException>() {...}); // throws unchecked RuntimeException.
-deepFor(array, new Each<Object, Error>() {...}); // throws unchecked Error.
 
- // Throws checked Exception that will need to be rethrown or caught.
-deepFor(array, new Each<Object, Exception>() {...});
 </pre>
 
 The method can handle arrays of any shape and that also have null dimensions.
 
 <pre class="source">
-int[][][] array = {
-        {
-                null,
-                {1, 2, 3},
-                {4}
-        },
-        null,
-        {
-                {5, 6},
-                {7, 8, 9}
-        },
-        {
-                {10},
-                null
-        },
-        null
-};
 
-deepFor(array, new Each<Integer, RuntimeException>() {
-
-    @Override
-    public void run(Integer element, int[] axis) throws RuntimeException {
-
-        System.out.println(Arrays.toString(axis) + ": " + element);
-    }
-});
-//    [0, 1, 0]: 1
-//    [0, 1, 1]: 2
-//    [0, 1, 2]: 3
-//    [0, 2, 0]: 4
-//    [2, 0, 0]: 5
-//    [2, 0, 1]: 6
-//    [2, 1, 0]: 7
-//    [2, 1, 1]: 8
-//    [2, 1, 2]: 9
-//    [3, 0, 0]: 10
 </pre>
