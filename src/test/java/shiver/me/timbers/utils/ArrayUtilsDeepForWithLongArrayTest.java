@@ -11,19 +11,13 @@ import static shiver.me.timbers.Constants.LONGS_1D;
 public class ArrayUtilsDeepForWithLongArrayTest extends AbstractDeepForTest<long[], Long> {
 
     public ArrayUtilsDeepForWithLongArrayTest() {
-        super(LONGS_1D);
+        super(LONGS_1D, new long[0], LONGS_1D.length);
     }
 
     @Override
     protected void deepFor(long[] array, Each<Long, RuntimeException> each) {
 
         ArrayUtils.deepFor(array, each);
-    }
-
-    @Override
-    protected int arrayElementNumber() {
-
-        return LONGS_1D.length;
     }
 
     @Override
@@ -36,11 +30,5 @@ public class ArrayUtilsDeepForWithLongArrayTest extends AbstractDeepForTest<long
     protected Long getElementFromAxis(long[] array, int[] axis) {
 
         return array[axis[0]];
-    }
-
-    @Override
-    protected long[] emptyArray() {
-
-        return new long[0];
     }
 }

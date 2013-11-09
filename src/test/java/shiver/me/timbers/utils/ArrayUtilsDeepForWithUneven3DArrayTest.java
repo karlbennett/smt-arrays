@@ -35,19 +35,13 @@ public class ArrayUtilsDeepForWithUneven3DArrayTest extends AbstractDeepForTest<
     };
 
     public ArrayUtilsDeepForWithUneven3DArrayTest() {
-        super(UNEVEN_BYTES_3D);
+        super(UNEVEN_BYTES_3D, new byte[3][3][], 21);
     }
 
     @Override
     protected void deepFor(byte[][][] array, Each<Byte, RuntimeException> each) {
 
         ArrayUtils.deepFor(array, each);
-    }
-
-    @Override
-    protected int arrayElementNumber() {
-
-        return 21;
     }
 
     @Override
@@ -60,11 +54,5 @@ public class ArrayUtilsDeepForWithUneven3DArrayTest extends AbstractDeepForTest<
     protected Byte getElementFromAxis(byte[][][] array, int[] axis) {
 
         return array[axis[0]][axis[1]][axis[2]];
-    }
-
-    @Override
-    protected byte[][][] emptyArray() {
-
-        return new byte[3][3][];
     }
 }

@@ -173,13 +173,12 @@ public final class ArrayUtils {
      *
      * @param array     the array that will be iterated over.
      * @param dimension the current dimension of the array that the recursion has reached.
-     * @param index     the current index of the current dimension.
      * @param axisArray the axis of the current iteration. This may only be partially populated depending on the current
-     *                  dimension.
+ *                  dimension.
      * @param each      the each interface that will be used to expose the value and axis of each iteration to the user.
      */
     @SuppressWarnings("unchecked")
-    private static <T, E extends Throwable> void innerDeepFor(Object array, int dimension, int index, int[] axisArray,
+    private static <T, E extends Throwable> void innerDeepFor(Object array, int dimension, int[] axisArray,
                                                               Each<T, E> each) throws E {
 
         // If we have reached a leaf in the array then stop recursing and produce the current value and axis.
@@ -204,11 +203,11 @@ public final class ArrayUtils {
         }
 
         // Otherwise we are on a branch so recursively iterate over all it's elements.
-        for (int i = index; i < getLength(array); i++) {
+        for (int i = 0; i < getLength(array); i++) {
 
             axisArray[dimension] = i;
 
-            innerDeepFor(get(array, i), dimension + 1, 0, axisArray, each);
+            innerDeepFor(get(array, i), dimension + 1, axisArray, each);
         }
     }
 
@@ -219,6 +218,7 @@ public final class ArrayUtils {
      *
      * @param array the array to iterate over.
      * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
      */
     private static <T, E extends Throwable> void innerDeepFor(Object array, Each<T, E> each) throws E {
 
@@ -227,7 +227,7 @@ public final class ArrayUtils {
             return;
         }
 
-        innerDeepFor(array, 0, 0, new int[findDimensions(array)], each);
+        innerDeepFor(array, 0, new int[findDimensions(array)], each);
     }
 
     /**
@@ -626,6 +626,65 @@ public final class ArrayUtils {
     public static List<Double> primitiveAsList(double... values) {
 
         return Arrays.asList(deepAutoBox(values));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T, E extends Throwable> void innerTraverse(Object array, int dimension, int[] axis, Each<T, E> each)
+            throws E {
+
+        // If the current element isn't an array then we must have reached a leaf so pass it to the caller.
+        if (isNotArray(array)) {
+
+            each.run((T) array, axis);
+
+            return;
+        }
+
+        final int length = Array.getLength(array);
+
+        // If the current element is an empty array we cannot traverse any further so pass the leaf to the caller.
+        if (length == 0) {
+
+            each.run((T) array, axis);
+
+            return;
+        }
+
+        for (int i = 0; i < length; i++) {
+
+            axis[dimension] = i;
+
+            innerTraverse(Array.get(array, i), dimension + 1, axis, each);
+        }
+    }
+
+    /**
+     * Carry out a depth first traversal of the supplied array. This method supports arrays with any number of
+     * dimensions. Note, that if used on an array with missing dimensions the lowest element will get passed into the
+     * {@link Each#run(T, int[])} run method. That means that an instance of an array type instead of the component type
+     * will get passed to the first argument and if this argument isn't of the type {@link Object} a
+     * {@link ClassCastException} will be thrown.
+     *
+     * <code>
+     *  int[][] array = {
+     *      {},
+     *      {1, 2, 3}
+     *  };
+     *
+     *  ArrayUtils.traverse(array, new ArrayUtils.Each<Integer, RuntimeException>() {
+     *      @Override
+     *      public void run(Integer element, int[] axis) throws RuntimeException {
+     *      }
+     *  }); // throws ClassCastException.
+     * </code>
+     *
+     * @param array the array to traverse.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <A, T, E extends Throwable> void traverse(A[] array, Each<T, E> each) throws E {
+
+        innerTraverse(array, 0, new int[findDimensions(array)], each);
     }
 
     /**

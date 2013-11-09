@@ -11,19 +11,13 @@ import static shiver.me.timbers.Constants.BYTES_1D;
 public class ArrayUtilsDeepForWithByteArrayTest extends AbstractDeepForTest<byte[], Byte> {
 
     public ArrayUtilsDeepForWithByteArrayTest() {
-        super(BYTES_1D);
+        super(BYTES_1D, new byte[0], BYTES_1D.length);
     }
 
     @Override
     protected void deepFor(byte[] array, Each<Byte, RuntimeException> each) {
 
         ArrayUtils.deepFor(array, each);
-    }
-
-    @Override
-    protected int arrayElementNumber() {
-
-        return BYTES_1D.length;
     }
 
     @Override
@@ -36,11 +30,5 @@ public class ArrayUtilsDeepForWithByteArrayTest extends AbstractDeepForTest<byte
     protected Byte getElementFromAxis(byte[] array, int[] axis) {
 
         return array[axis[0]];
-    }
-
-    @Override
-    protected byte[] emptyArray() {
-
-        return new byte[0];
     }
 }

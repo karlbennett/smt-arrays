@@ -26,19 +26,13 @@ public class ArrayUtilsDeepForWith3DArrayTest extends AbstractDeepForTest<Object
     };
 
     public ArrayUtilsDeepForWith3DArrayTest() {
-        super(NOT_BLANK_3D_ARRAY);
+        super(NOT_BLANK_3D_ARRAY, new Object[0][][], 12);
     }
 
     @Override
     protected void deepFor(Object[][][] array, Each<Object, RuntimeException> each) {
 
         ArrayUtils.deepFor(array, each);
-    }
-
-    @Override
-    protected int arrayElementNumber() {
-
-        return 12;
     }
 
     @Override
@@ -51,11 +45,5 @@ public class ArrayUtilsDeepForWith3DArrayTest extends AbstractDeepForTest<Object
     protected Object getElementFromAxis(Object[][][] array, int[] axis) {
 
         return array[axis[0]][axis[1]][axis[2]];
-    }
-
-    @Override
-    protected Object[][][] emptyArray() {
-
-        return new Object[0][][];
     }
 }
