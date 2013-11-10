@@ -172,7 +172,7 @@ public abstract class AbstractIterationTest<A, T> {
      * This {@link shiver.me.timbers.ArrayUtils.Each} implementation keeps track of how many times the {@link shiver.me.timbers.ArrayUtils.Each#run(T, int[])} run method has been
      * called.
      */
-    private abstract class CountingEach implements Each<T, RuntimeException> {
+    private abstract class CountingEach extends Each<T, RuntimeException> {
 
         private int count = 0;
 

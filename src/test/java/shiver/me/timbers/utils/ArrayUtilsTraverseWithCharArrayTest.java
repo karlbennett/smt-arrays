@@ -8,16 +8,16 @@ import static shiver.me.timbers.Constants.CHARS_1D;
 /**
  * @author Karl Bennett
  */
-public class ArrayUtilsDeepForWithCharArrayTest extends AbstractDeepForTest<char[], Character> {
+public class ArrayUtilsTraverseWithCharArrayTest extends AbstractTraverseTest<char[], Character> {
 
-    public ArrayUtilsDeepForWithCharArrayTest() {
+    public ArrayUtilsTraverseWithCharArrayTest() {
         super(CHARS_1D, new char[0], CHARS_1D.length);
     }
 
     @Override
     protected void deepFor(char[] array, Each<Character, RuntimeException> each) {
 
-        ArrayUtils.deepFor(array, each);
+        ArrayUtils.traverse(array, each);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package shiver.me.timbers.utils;
 
 import shiver.me.timbers.ArrayUtils;
-import shiver.me.timbers.Asserts;
 
 import static shiver.me.timbers.ArrayUtils.Each;
-import static shiver.me.timbers.Asserts.*;
+import static shiver.me.timbers.Asserts.isNull;
 import static shiver.me.timbers.Constants.NOT_BLANK_3D_ARRAY;
 
 /**

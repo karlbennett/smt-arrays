@@ -13,7 +13,7 @@ import static shiver.me.timbers.ArrayReflections.findDimensions;
 import static shiver.me.timbers.ArrayReflections.isArray;
 import static shiver.me.timbers.ArrayReflections.isEmpty;
 import static shiver.me.timbers.ArrayReflections.isNotArray;
-import static shiver.me.timbers.Asserts.isNotNull;
+import static shiver.me.timbers.Asserts.isNull;
 
 /**
  * A class that contains useful helper methods for manipulating arrays.
@@ -23,299 +23,6 @@ import static shiver.me.timbers.Asserts.isNotNull;
 public final class ArrayUtils {
 
     private ArrayUtils() {
-    }
-
-    /**
-     * The recursive deep copy method that is initialised in the public {@link #deepCopyOf} method.
-     *
-     * @param array       the array to copy.
-     * @param copiedArray the array that will hold the copied values.
-     * @param dimension   the current array dimension that is being populated.
-     * @param index       the index to start copying from.
-     * @param axis        the axis of the current element.
-     */
-    @SuppressWarnings("unchecked")
-    private static <A> A innerDeepCopyOf(A array, A copiedArray, int dimension, int index, int[] axis) {
-        // Record the current iterations axis.
-        axis[dimension] = index;
-
-        // If the current index is greater than the max index of the current array then we must have finished copying.
-        if (index >= getLength(array)) return copiedArray;
-
-        // Otherwise copy the next element in the array.
-        final Object element = get(array, index);
-
-        // If the next element is an array then it needs to be deep copied.
-        if (isNotNull(element) && isArray(element)) {
-
-            set(copiedArray, index, innerDeepCopyOf(
-                    element,
-                    newInstance(
-                            element.getClass().getComponentType(),
-                            getLength(element)),
-                    dimension + 1, 0, axis));
-
-        } else {
-            // Otherwise just assign it to the same index in the copy array.
-            set(copiedArray, index, element);
-        }
-        // Lastly move onto the next element.
-        return innerDeepCopyOf(array, copiedArray, dimension, ++index, axis);
-    }
-
-    /**
-     * This method just wraps the initialisation of the main deep copy logic so that it can be reused in the public
-     * methods.
-     *
-     * @param array the array to copy.
-     * @return the copied array.
-     */
-    @SuppressWarnings("unchecked")
-    private static <A> A innerDeepCopyOf(A array) {
-
-        if (isNotArray(array) || isEmpty(array)) return array;
-
-        return innerDeepCopyOf(array, (A) newInstance(array.getClass().getComponentType(), Array.getLength(array)), 0,
-                0, new int[findDimensions(array)]);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied array, that is create a new array for each dimension, not a deep copy of
-     * the containing objects.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static <T> T[] deepCopyOf(T[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code byte} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static byte[] deepCopyOf(byte[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code char} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static char[] deepCopyOf(char[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code short} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static short[] deepCopyOf(short[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code int} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static int[] deepCopyOf(int[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code long} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static long[] deepCopyOf(long[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code float} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static float[] deepCopyOf(float[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * Carry out a deep copy of the supplied {@code double} array, that is create a new array for each dimension.
-     *
-     * @param array the array to copy.
-     * @return a new array with newly created dimensions.
-     */
-    public static double[] deepCopyOf(double[] array) {
-
-        return innerDeepCopyOf(array);
-    }
-
-    /**
-     * This method recursively iterates over all the elements within the supplied array.
-     *
-     * @param array     the array that will be iterated over.
-     * @param dimension the current dimension of the array that the recursion has reached.
-     * @param axisArray the axis of the current iteration. This may only be partially populated depending on the current
- *                  dimension.
-     * @param each      the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    @SuppressWarnings("unchecked")
-    private static <T, E extends Throwable> void innerDeepFor(Object array, int dimension, int[] axisArray,
-                                                              Each<T, E> each) throws E {
-
-        // If we have reached a leaf in the array then stop recursing and produce the current value and axis.
-        if (isNotArray(array)) {
-
-            // If we have found a leaf but aren't at the final dimension then we don't have an actual value so should
-            // just bail out.
-            if (axisArray.length > dimension) {
-
-                return;
-            }
-
-            each.run((T) array, axisArray);
-
-            return;
-        }
-
-        // If the current array is empty then no further iteration is required.
-        if (isEmpty(array)) {
-
-            return;
-        }
-
-        // Otherwise we are on a branch so recursively iterate over all it's elements.
-        for (int i = 0; i < getLength(array); i++) {
-
-            axisArray[dimension] = i;
-
-            innerDeepFor(get(array, i), dimension + 1, axisArray, each);
-        }
-    }
-
-    /**
-     * This private method executes the actual iteration. The problem is it takes an {@link Object} type which doesn't
-     * provide any type safety, which means the method could be called on an object that isn't an array. For this reason
-     * it has been wrapped by type safe public methods.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
-     */
-    private static <T, E extends Throwable> void innerDeepFor(Object array, Each<T, E> each) throws E {
-
-        if (isEmpty(array)) {
-
-            return;
-        }
-
-        innerDeepFor(array, 0, new int[findDimensions(array)], each);
-    }
-
-    /**
-     * Iterate over all the elements within an array that has any number of dimensions.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <A, T, E extends Throwable> void deepFor(A[] array, Each<T, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code byte} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(byte[] array, Each<Byte, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code char} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(char[] array, Each<Character, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code short} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(short[] array, Each<Short, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code int} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(int[] array, Each<Integer, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code long} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(long[] array, Each<Long, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code float} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(float[] array, Each<Float, E> each) throws E {
-
-        innerDeepFor(array, each);
-    }
-
-    /**
-     * Iterate over all the elements within the supplied {@code double} array.
-     *
-     * @param array the array to iterate over.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     */
-    public static <E extends Throwable> void deepFor(double[] array, Each<Double, E> each) throws E {
-
-        innerDeepFor(array, each);
     }
 
     /**
@@ -552,6 +259,392 @@ public final class ArrayUtils {
     }
 
     /**
+     * This method just wraps the initialisation of the main deep copy logic so that it can be reused in the public
+     * methods.
+     *
+     * @param array the array to copy.
+     * @return the copied array.
+     */
+    @SuppressWarnings("unchecked")
+    private static <A> A innerDeepCopyOf(A array) {
+
+        if (isNull(array)) {
+
+            return null;
+        }
+
+        return (A) innerDeepAutoBox(array.getClass(), array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied array, that is create a new array for each dimension, not a deep copy of
+     * the containing objects.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static <T> T[] deepCopyOf(T[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code byte} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static byte[] deepCopyOf(byte[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code char} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static char[] deepCopyOf(char[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code short} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static short[] deepCopyOf(short[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code int} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static int[] deepCopyOf(int[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code long} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static long[] deepCopyOf(long[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code float} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static float[] deepCopyOf(float[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    /**
+     * Carry out a deep copy of the supplied {@code double} array, that is create a new array for each dimension.
+     *
+     * @param array the array to copy.
+     * @return a new array with newly created dimensions.
+     */
+    public static double[] deepCopyOf(double[] array) {
+
+        return innerDeepCopyOf(array);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T, E extends Throwable> void innerTraverse(Object array, int dimension, int index, int[] axis,
+                                                              Next<T, E> next)
+            throws E {
+
+        final int length;
+
+        // If the current element isn't an array then we must have reached a leaf so pass it to the caller.
+        if (isNotArray(array) || (length = Array.getLength(array)) == 0) {
+
+            next.run((T) array, dimension, axis);
+
+            return;
+        }
+
+        // If the current index is greater than or equal to the length of the current array we have reached the end of
+        // the traversal.
+        if (length <= index) {
+
+            return;
+        }
+
+        axis[dimension] = index;
+
+        innerTraverse(Array.get(array, index), dimension + 1, 0, axis, next);
+
+        innerTraverse(array, dimension, index + 1, axis, next);
+    }
+
+    public static <T, E extends Throwable> void innerTraverse(Object array, Next<T, E> next) throws E {
+
+        innerTraverse(array, 0, 0, new int[findDimensions(array)], next);
+    }
+
+    /**
+     * Carry out a depth first traversal of the supplied array. This method supports arrays with any number of
+     * dimensions. Note, that if used on an array with missing dimensions the lowest element will get passed into the
+     * {@link Next#run(T, int, int[])} run method. That means that an instance of an array type instead of the component
+     * type will get passed to the first argument and if this argument isn't of the type {@link Object} a
+     * {@link ClassCastException} will be thrown.
+     * <p/>
+     * <code>
+     *  int[][] array = {
+     *      {},
+     *      {1, 2, 3}
+     *  };
+     * <p/>
+     *  ArrayUtils.traverse(array, new ArrayUtils.Each<Integer, RuntimeException>() {
+     *
+     *      @Override public void run(Integer element, int[] axis) throws RuntimeException {
+     *      }
+     *  }); // throws ClassCastException.
+     * </code>
+     * <p/>
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <A, T, E extends Throwable> void traverse(A[] array, final Next<T, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code byte} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(byte[] array, final Next<Byte, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code char} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(char[] array, final Next<Character, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code short} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(short[] array, final Next<Short, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code int} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(int[] array, final Next<Integer, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code long} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(long[] array, final Next<Long, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code float} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(float[] array, final Next<Float, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * Traverse the single dimensional {@code double} array.
+     *
+     * @param array the array to traverse.
+     * @param next  the {@code Next} interface that will be used to expose the value and axis of each iteration to the
+     *              user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    public static <E extends Throwable> void traverse(double[] array, final Next<Double, E> next) throws E {
+
+        innerTraverse(array, next);
+    }
+
+    /**
+     * This private method executes the actual iteration. The problem is it takes an {@link Object} type which doesn't
+     * provide any type safety, which means the method could be called on an object that isn't an array. For this reason
+     * it has been wrapped by type safe public methods.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     */
+    private static <T, E extends Throwable> void innerDeepFor(Object array, final Each<T, E> each) throws E {
+
+        if (isEmpty(array)) {
+
+            return;
+        }
+
+        innerTraverse(array, new Next<T, E>() {
+
+            @Override
+            public void run(T element, int dimension, int[] axis) throws E {
+
+                if (isArray(element)) {
+
+                    return;
+                }
+
+                if (axis.length > dimension) {
+
+                    return;
+                }
+
+                each.run(element, axis);
+            }
+        });
+    }
+
+    /**
+     * Iterate over all the elements within an array that has any number of dimensions.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <A, T, E extends Throwable> void deepFor(A[] array, final Each<T, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code byte} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(byte[] array, Each<Byte, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code char} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(char[] array, Each<Character, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code short} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(short[] array, Each<Short, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code int} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(int[] array, Each<Integer, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code long} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(long[] array, Each<Long, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code float} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(float[] array, Each<Float, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
+     * Iterate over all the elements within the supplied {@code double} array.
+     *
+     * @param array the array to iterate over.
+     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
+     */
+    public static <E extends Throwable> void deepFor(double[] array, Each<Double, E> each) throws E {
+
+        innerDeepFor(array, each);
+    }
+
+    /**
      * Convert the supplied array of {@code byte}s into a {@link List} of {@link Byte}s.
      *
      * @param values the array to convert.
@@ -628,78 +721,44 @@ public final class ArrayUtils {
         return Arrays.asList(deepAutoBox(values));
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T, E extends Throwable> void innerTraverse(Object array, int dimension, int[] axis, Each<T, E> each)
-            throws E {
-
-        // If the current element isn't an array then we must have reached a leaf so pass it to the caller.
-        if (isNotArray(array)) {
-
-            each.run((T) array, axis);
-
-            return;
-        }
-
-        final int length = Array.getLength(array);
-
-        // If the current element is an empty array we cannot traverse any further so pass the leaf to the caller.
-        if (length == 0) {
-
-            each.run((T) array, axis);
-
-            return;
-        }
-
-        for (int i = 0; i < length; i++) {
-
-            axis[dimension] = i;
-
-            innerTraverse(Array.get(array, i), dimension + 1, axis, each);
-        }
-    }
-
     /**
-     * Carry out a depth first traversal of the supplied array. This method supports arrays with any number of
-     * dimensions. Note, that if used on an array with missing dimensions the lowest element will get passed into the
-     * {@link Each#run(T, int[])} run method. That means that an instance of an array type instead of the component type
-     * will get passed to the first argument and if this argument isn't of the type {@link Object} a
-     * {@link ClassCastException} will be thrown.
-     *
-     * <code>
-     *  int[][] array = {
-     *      {},
-     *      {1, 2, 3}
-     *  };
-     *
-     *  ArrayUtils.traverse(array, new ArrayUtils.Each<Integer, RuntimeException>() {
-     *      @Override
-     *      public void run(Integer element, int[] axis) throws RuntimeException {
-     *      }
-     *  }); // throws ClassCastException.
-     * </code>
-     *
-     * @param array the array to traverse.
-     * @param each  the each interface that will be used to expose the value and axis of each iteration to the user.
-     * @throws E if this generic typed exception is thrown from within the supplied {@code each}.
+     * An interface that can be used with any of the {@link #traverse} methods to expose the current iterations element,
+     * dimension, and axis.
      */
-    public static <A, T, E extends Throwable> void traverse(A[] array, Each<T, E> each) throws E {
+    public static interface Next<T, E extends Throwable> {
 
-        innerTraverse(array, 0, new int[findDimensions(array)], each);
+        /**
+         * Implement this method to get access to each iterations element, dimension, and axis.
+         *
+         * @param element   the element for the current iteration.
+         * @param dimension the array dimension of the current iteration.
+         * @param axis      the axis of the current iteration, it is an array with a length matching the dimensions of
+         *                  the array being iterated.
+         */
+        public void run(T element, int dimension, int[] axis) throws E;
     }
 
     /**
-     * An interface that can be used with any of the {@link #innerDeepFor} methods to expose the current iterations element
+     * An interface that can be used with any of the {@link #deepFor} methods to expose the current iterations element
      * and axis.
      */
-    public static interface Each<T, E extends Throwable> {
+    public static abstract class Each<T, E extends Throwable> implements Next<T, E> {
 
         /**
          * Implement this method to get access to each iterations element and axis.
          *
          * @param element the element for the current iteration.
-         * @param axis    the axis of the current iteration, it is an array with a length matching the dimensions of the
-         *                array being iterated.
+         * @param axis    the axis of the current iteration, it is an array with a length matching the dimensions of
+         *                the array being iterated.
          */
-        public void run(T element, int[] axis) throws E;
+        protected abstract void run(T element, int[] axis) throws E;
+
+        /**
+         * {@inheritDoc}
+         */
+        public void run(T element, int dimension, int[] axis) throws E {
+
+            run(element, axis);
+        }
     }
 }
