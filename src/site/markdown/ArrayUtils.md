@@ -60,35 +60,35 @@ The method can also handle arrays of any shape, they do not have to be square, t
 dimension arrays of the same length. It is also possible to have missing dimensions as well.
 
 <pre class="source">
-TestClass[][][] tests = {
-        null,
+<span class="className">TestClass</span>[][][] tests = {
+        <span class="keyWord">null</span>,
         {
-                {new TestClass(1), new TestClass(2), new TestClass(3)},
-                {null, new TestClass(5)},
-                null
+                {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">1</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">2</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">3</span><span class="parentheses">)</span>},
+                {<span class="keyWord">null</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">5</span><span class="parentheses">)</span>},
+                <span class="keyWord">null</span>
         },
         {
-                null
+                <span class="keyWord">null</span>
         },
         {
-                {new TestClass(6)},
-                {new TestClass(7), new TestClass(8)},
-                {new TestClass(9), new TestClass(10), new TestClass(11)}
+                {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">6</span><span class="parentheses">)</span>},
+                {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">7</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">8</span><span class="parentheses">)</span>},
+                {<span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">9</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">10</span><span class="parentheses">)</span>, <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">11</span><span class="parentheses">)</span>}
         },
-        null
+        <span class="keyWord">null</span>
 };
 
-TestClass[][][] testsCopy = deepCopyOf(tests);
+<span class="className">TestClass</span>[][][] testsCopy = <span class="methodName">deepCopyOf</span><span class="parentheses">(</span>tests<span class="parentheses">)</span>;
 
-assertThat(testsCopy, equalTo(tests)); // pass.
+<span class="methodName">assertThat</span><span class="parentheses">(</span>testsCopy, <span class="methodName">equalTo</span><span class="parentheses">(</span>tests<span class="parentheses">))</span>; <span class="comment">// pass.</span>
 
-tests[1][0][1].test = 99;
+tests[<span class="primitive">1</span>][<span class="primitive">0</span>][<span class="primitive">1</span>].test = <span class="primitive">99</span>;
 
-assertThat(testsCopy, equalTo(tests)); // pass.
+<span class="methodName">assertThat</span><span class="parentheses">(</span>testsCopy, <span class="methodName">equalTo</span><span class="parentheses">(</span>tests<span class="parentheses">))</span>; <span class="comment">// pass.</span>
 
-tests[3][1][1] = new TestClass(100);
+tests[<span class="primitive">3</span>][<span class="primitive">1</span>][<span class="primitive">1</span>] = <span class="keyWord">new</span> <span class="className">TestClass</span><span class="parentheses">(</span><span class="primitive">100</span><span class="parentheses">)</span>;
 
-assertThat(testsCopy, not(equalTo(tests))); // pass.
+<span class="methodName">assertThat</span><span class="parentheses">(</span>testsCopy, <span class="methodName">not</span><span class="parentheses">(</span><span class="methodName">equalTo</span><span class="parentheses">(</span>tests<span class="parentheses">)))</span>; <span class="comment">// pass.</span>
 </pre>
 
 #### deepFor(A[],Each<T, E>) throws E
@@ -168,12 +168,51 @@ axis[2]: z
 The exception that the `deepFor` method throws can be set with the generic typing of the method. This means it is
 possible to set weather the method throws a checked or runtime exception.
 
-<pre class="source">
+```
+deepFor(array, new Each<Object, RuntimeException>() {...}); // throws unchecked RuntimeException.
+deepFor(array, new Each<Object, Error>() {...}); // throws unchecked Error.
 
-</pre>
+ // Throws checked Exception that will need to be rethrown or caught.
+deepFor(array, new Each<Object, Exception>() {...});
+```
 
 The method can handle arrays of any shape and that also have null dimensions.
 
-<pre class="source">
+```
+int[][][] array = {
+        {
+                null,
+                {1, 2, 3},
+                {4}
+        },
+        null,
+        {
+                {5, 6},
+                {7, 8, 9}
+        },
+        {
+                {10},
+                null
+        },
+        null
+};
 
-</pre>
+deepFor(array, new Each<Integer, RuntimeException>() {
+
+    @Override
+    public void run(Integer element, int[] axis) throws RuntimeException {
+
+        System.out.println(Arrays.toString(axis) + ": " + element);
+    }
+});
+//    [0, 1, 0]: 1
+//    [0, 1, 1]: 2
+//    [0, 1, 2]: 3
+//    [0, 2, 0]: 4
+//    [2, 0, 0]: 5
+//    [2, 0, 1]: 6
+//    [2, 1, 0]: 7
+//    [2, 1, 1]: 8
+//    [2, 1, 2]: 9
+//    [3, 0, 0]: 10
+```
